@@ -1,0 +1,2 @@
+# No one wants a build directory full of objects and a kernel if we can use the 'fucking compiler' to generate this
+Build

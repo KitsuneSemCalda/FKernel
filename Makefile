@@ -1,27 +1,48 @@
 .PHONY: all clean
 
-include ./config.mk
+include config.mk
 
-BUILD_DIR=Build
-OBJ_DIR=$(BUILD_DIR)/Obj
+# Directories (used by Makefile to compile the Kernel)
 
-KERNEL_BIN=$(BUILD_DIR)/kernel.bin
-OBJS=$(shell find $(OBJ_DIR) -type f -name "*.o")
+SRC_DIR := Src
+OBJ_DIR := Build/Obj
+INC_DIR := Include
+CONFIG_DIR := Config
 
-all: build run
+# Recursive search to source code
 
-build: $(KERNEL_BIN)
+C_SRCS := $(shell find $(SRC_DIR) -type f -name "*.c")
+ASM_SRCS := $(shell find $(SRC_DIR) -type f -name "*.asm")
 
-$(KERNEL_BIN): compile
-	@echo "Linking kernel..."
-	@$(LD) $(LDFLAGS) $(OBJS) -o $@
+# Converting Source Path to Object Path
 
-compile:
-	@mkdir -p $(BUILD_DIR)
-	@mkdir -p $(OBJ_DIR)
-	@find Src/* -type f -name Makefile -execdir $(MAKE) -s -C $(dir {}) \;
+C_OBJS := $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(C_SRCS))
+ASM_OBJS := $(patsubst $(SRC_DIR)%.asm, $(OBJ_DIR)%.o, $(ASM_SRCS))
+OBJS := $(C_OBJS) $(ASM_OBJS)
 
-clean:
-	@echo "Clean build..."
-	@find Src/* -type f -name Makefile -execdir $(MAKE) -s -C $(dir {}) clean \;
-	@rm -rf $(BUILD_DIR)
+# Main Target
+all: kernel
+
+kernel: $(OBJS)
+	@echo "Linking Objects..."
+	@$(LD) $(LDFLAGS) -o Build/kernel.bin $(OBJS)
+	@echo "Kernel compiled with sucess!"
+
+# Rule to compile c files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "CC: $<"
+	@$(CC) $(CFLAGS) $< -o $@
+
+# Rule to compile asm files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
+	@mkdir -p $(dir $@)
+	@echo "AS: $<"
+	@$(AS) $(ASFLAGS) $< -o $@
+
+# Clean compiled files
+clean: 
+	@rm -rf Build/Obj Build/kernel.bin
+	@echo "Cleaned"
+
+

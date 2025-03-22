@@ -1,8 +1,11 @@
 # Config.mk
 # This file is used to define the common tools used to compile the FKernel 
 
-INCLUDE_DIR ?= Include
-CONFIG_DIR ?= Config
+INCLUDE_DIR ?= ./Include
+CONFIG_DIR ?= ./Config
+
+BUILD_DIR ?= ./Build
+OBJ_DIR ?= $(BUILD_DIR)/Obj
 
 INCLUDE_FLAGS := $(shell find $(INCLUDE_DIR) -type d | sed 's/^/-I/g')
 
@@ -20,7 +23,7 @@ CFLAGS = -ffreestanding \
 					 -m64 \
 					 -O0 \
 					 -c \
-					 -$(INCLUDE_FLAGS) \
+					 $(INCLUDE_FLAGS) \
 					 -fno-stack-protector \
 					 -fno-strict-aliasing \
 					 -fno-omit-frame-pointer \
@@ -30,3 +33,5 @@ CFLAGS = -ffreestanding \
 AS = nasm
 ASFLAGS = -felf64 \
 					-O2
+
+
