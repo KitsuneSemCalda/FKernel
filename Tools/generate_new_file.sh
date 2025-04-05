@@ -36,8 +36,8 @@ EOF
 }
 
 {
-  echo "#pragma once"
   generate_header "$HEADER_FILE"
+  echo "#pragma once"
 } >"$HEADER_FILE"
 
 generate_header "$SRC_FILE" >"$SRC_FILE"
