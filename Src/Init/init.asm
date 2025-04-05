@@ -1,6 +1,7 @@
 section .text
 
 global _start
+global stack_top
 extern kmain
 
 _start:
