@@ -6,7 +6,14 @@
  * License: SPDX-License-Identifier: BSD 3-Clause
  */
 
+#include "../../Include/Init/main.h"
+
+void setup_stack(void){
+  asm("mov %0, %%rsp" : : "r"(stack_top));
+}
+
 void kmain(void) {
+  setup_stack();
   while (1) {
     asm ("hlt");
   }
