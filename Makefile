@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all run clean
 
 include config.mk
 
@@ -21,7 +21,7 @@ ASM_OBJS := $(patsubst $(SRC_DIR)%.asm, $(OBJ_DIR)%.o, $(ASM_SRCS))
 OBJS := $(C_OBJS) $(ASM_OBJS)
 
 # Main Target
-all: kernel
+all: kernel run
 
 kernel: $(OBJS)
 	@echo "Linking Objects..."
@@ -45,4 +45,6 @@ clean:
 	@rm -rf Build/Obj Build/kernel.bin
 	@echo "Cleaned"
 
+run:
+	@bash Tools/runKernel.sh
 
