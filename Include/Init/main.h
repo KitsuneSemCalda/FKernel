@@ -8,7 +8,5 @@
 #pragma once
 
 #include "../../Include/LibK/stdint.h"
-#include "../../Include/MemoryManagement/imalloc.h"
 
-void setup_stack(void);
 void kmain(void);
