@@ -24,7 +24,7 @@ void *imalloc_aligned(size_t size, size_t align) {
   uintptr_t alloc_end = alloc_start + size;
 
   if (alloc_end > imalloc_end) {
-    // TODO: Adding a message or fallback if needed
+    asm("cli; hlt");
     return NULL;
   }
 
