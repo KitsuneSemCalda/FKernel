@@ -8,8 +8,7 @@
 #pragma once
 
 #include "../../Include/LibK/stdint.h"
-
-extern uintptr_t stack_top;
+#include "../../Include/MemoryManagement/imalloc.h"
 
 void setup_stack(void);
 void kmain(void);

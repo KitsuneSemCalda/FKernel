@@ -8,13 +8,12 @@
 
 #include "../../Include/Init/main.h"
 
-void setup_stack(void){
-  asm("mov %0, %%rsp" : : "r"(stack_top));
-}
+void setup_stack(void) { void *stack = imalloc_aligned(16384, 16); }
 
 void kmain(void) {
   setup_stack();
+
   while (1) {
-    asm ("hlt");
+    asm("hlt");
   }
 }
