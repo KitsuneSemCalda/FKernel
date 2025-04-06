@@ -2,7 +2,7 @@ section .note.Xen note align=4
 
     ; Namesz, Descsz, Type
     dd 4                      ; n_namesz
-    dd 4                      ; n_descsz
+    dd 8                      ; n_descsz
     dd 0x12                   ; n_type = XEN_ELFNOTE_PHYS32_ENTRY
 
     ; Name: "Xen" + null terminator
